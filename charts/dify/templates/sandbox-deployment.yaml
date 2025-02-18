@@ -46,6 +46,9 @@ spec:
       {{- end }}
       {{- end }}
       {{- if .Values.sandbox.podSecurityContext }}
+      volumes:
+      - name: logs
+        emptyDir: {}
       securityContext:
 {{ toYaml .Values.sandbox.podSecurityContext | indent 8 }}
       {{- end }}
@@ -80,6 +83,9 @@ spec:
         securityContext:
 {{ toYaml .Values.sandbox.containerSecurityContext | indent 10 }}
         {{- end }}
+        volumeMounts:
+          - name: logs
+            mountPath: /logs
         env:
         {{- if .Values.sandbox.extraEnv }}
           {{- toYaml .Values.sandbox.extraEnv | nindent 8 }}
