@@ -49,6 +49,10 @@ spec:
       volumes:
       - name: logs
         emptyDir: {}
+      - name: sandbox-nodejs
+        emptyDir: {}
+      - name: sandbox-python
+        emptyDir: {}
       securityContext:
 {{ toYaml .Values.sandbox.podSecurityContext | indent 8 }}
       {{- end }}
@@ -86,6 +90,10 @@ spec:
         volumeMounts:
           - name: logs
             mountPath: /logs
+          - name: sandbox-nodejs
+            mountPath: /var/sandbox/sandbox-nodejs
+          - name: sandbox-python
+            mountPath: /var/sandbox/sandbox-python
         env:
         {{- if .Values.sandbox.extraEnv }}
           {{- toYaml .Values.sandbox.extraEnv | nindent 8 }}
